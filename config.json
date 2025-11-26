@@ -1,25 +1,65 @@
-25 → Biblioteca BICF
-22 → Biblioteca Biomedica Citta' Studi
-45 → Biblioteca Malliani
-4 → Biblioteca Polo Lingue sala di anglistica
-65 → Biblioteca Polo San Paolo
-34 → Biblioteca di Egittologia
-3 → Biblioteca di Filosofia
-20 → Biblioteca di Matematica
-21 → Biblioteca di Mediazione Linguistica e Culturale
-12 → Biblioteca di Medicina Polo Centrale
-13 → Biblioteca di Medicina Veterinaria
-35 → Biblioteca di Papirologia
-44 → Biblioteca di Scienze Politiche
-64 → Biblioteca di Scienze agrarie ed alimentari
-24 → Biblioteca di Scienze dell'Antichita' e Filologia Moderna
-6 → Biblioteca di Scienze della Storia e della Documentazione Storica
-14 → Biblioteca di Scienze della Terra
-23 → Biblioteca di Storia dell'arte della musica e dello spettacolo
-55 → Biblioteca di Studi giuridici e umanistici - Common Law e Diritto Internazionale
-60 → Biblioteca di Studi giuridici e umanistici - Diritto del Lavoro
-68 → Biblioteca di Studi giuridici e umanistici - Sala Centrale
-63 → Biblioteca di Studi giuridici e umanistici - Sala Senato (Diritto privato e Storia del diritto)
-73 → Biblioteca di Studi giuridici e umanistici - Sala del Settecento
-74 → Consultazione Banca Dati LSEG Workspace (ex Eikon)
-71 → Uffici Direzione SBA - Archivio Tesi
+{
+    "library": "Biblioteca BICF",
+
+    "libraries": {
+        "Biblioteca BICF": "25",
+        "Biblioteca Biomedica Citta' Studi": "22",
+        "Biblioteca Malliani": "45",
+        "Biblioteca Polo Lingue sala di anglistica": "4",
+        "Biblioteca Polo San Paolo": "65",
+        "Biblioteca di Egittologia": "34",
+        "Biblioteca di Filosofia": "3",
+        "Biblioteca di Matematica": "20",
+        "Biblioteca di Mediazione Linguistica e Culturale": "21",
+        "Biblioteca di Medicina Polo Centrale": "12",
+        "Biblioteca di Medicina Veterinaria": "13",
+        "Biblioteca di Papirologia": "35",
+        "Biblioteca di Scienze Politiche": "44",
+        "Biblioteca di Scienze agrarie ed alimentari": "64",
+        "Biblioteca di Scienze dell'Antichita' e Filologia Moderna": "24",
+        "Biblioteca di Scienze della Storia e della Documentazione Storica": "6",
+        "Biblioteca di Scienze della Terra": "14",
+        "Biblioteca di Storia dell'arte della musica e dello spettacolo": "23",
+        "Biblioteca di Studi giuridici e umanistici - Common Law e Diritto Internazionale": "55",
+        "Biblioteca di Studi giuridici e umanistici - Diritto del Lavoro": "60",
+        "Biblioteca di Studi giuridici e umanistici - Sala Centrale": "68",
+        "Biblioteca di Studi giuridici e umanistici - Sala Senato (Diritto privato e Storia del diritto)": "63",
+        "Biblioteca di Studi giuridici e umanistici - Sala del Settecento": "73",
+        "Consultazione Banca Dati LSEG Workspace (ex Eikon)": "74",
+        "Uffici Direzione SBA - Archivio Tesi": "71"
+    },
+
+    "service": "BICF - Piano Terra/Groundfloor",
+
+    "services": {
+        "BICF - Piano Terra/Groundfloor": "92",
+        "BICF - 1° Piano, Last Minute/1° floor, last minute": "50"
+    },
+
+    "duration_hours": 1,
+
+    "durations": {
+        "1": "3600",
+        "2": "7200",
+        "3": "10800",
+        "4": "14400",
+        "5": "18000",
+        "6": "21600",
+        "7": "25200",
+        "8": "28800",
+        "9": "32400",
+        "10": "36000",
+        "11": "39600",
+        "12": "43200",
+        "13": "46800",
+        "14": "50400"
+    },
+
+    "preferred_time": "21:00 - 22:00",
+
+    "user_info": {
+        "codice_fiscale": "CVLYMN98R66Z243C",
+        "email": "yasemin.cavildak@studenti.unimi.it",
+        "name": "CAVILDAK YASEMIN"
+    }
+}
