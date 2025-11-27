@@ -1,3 +1,4 @@
 psutil
 selenium
 chromedriver-autoinstaller
+pyinstaller
