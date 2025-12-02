@@ -138,6 +138,11 @@ class BookingBot:
         self.wait_and_click(By.CSS_SELECTOR, "button[data-cypress='continua']")
         self.wait_for_page_stable()
 
+    def click_final_next(self):
+        xpath = "//a[contains(text(), 'Next') and contains(@class, 'btn-primary')]"
+        self.wait_and_click(By.XPATH, xpath)
+        self.wait_for_page_stable()
+        logging.info("Clicked FINAL NEXT button")
 
     def select_first_available_day(self):
         # find element first
@@ -169,6 +174,12 @@ class BookingBot:
 
         logging.info(f"User info filled")
 
+    def click_confirm(self):
+        xpath = "//button[normalize-space(text())='Confirm']"
+        self.wait_and_click(By.XPATH, xpath)
+        self.wait_for_page_stable()
+        logging.info("Clicked Confirm button")
+
     
     def run(self):
         try:
@@ -181,6 +192,8 @@ class BookingBot:
             self.select_first_available_day()
             self.select_time_slot()
             self.fill_user_info()
+            self.click_final_next()
+            self.click_confirm()
 
             print("\nBooking bot finished successfully!\n")
 
