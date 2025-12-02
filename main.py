@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 
-from helper import init_options
+from helper import init_options, logged_step
 
 import logging
 
@@ -99,12 +99,14 @@ class BookingBot:
     def open_site(self):
         self.driver.get("https://prenotabiblio.sba.unimi.it/portalePlanning/biblio")
 
+    @logged_step
     def start_new_booking(self):
         xpath = "//h5[contains(normalize-space(.), 'New booking')]/ancestor::a"
         self.wait_and_click(By.XPATH, xpath)
         self.wait_for_page_stable()
         logging.info(f"Clicked New Booking")
 
+    @logged_step
     def select_library(self):
         # open dropdown
         self.wait_and_click(By.CSS_SELECTOR, "input[placeholder='Choose the appointment location']")
@@ -116,7 +118,7 @@ class BookingBot:
 
         logging.info(f"Selected library: {self.LIB_NAME}")
 
-
+    @logged_step
     def select_service(self):
         self.wait_and_click(By.CSS_SELECTOR, "input[placeholder='Choose a service for which you want to request an appointment']")
         self.wait_for_page_stable()
@@ -127,24 +129,26 @@ class BookingBot:
 
         logging.info(f"Selected SERVICE: { self.SERVICE_NAME}")
 
-
+    @logged_step
     def select_duration(self):
         duration_el = self.wait_for_element(By.ID, "durata")
         Select(duration_el).select_by_value(self.DURATION_ID)
         self.wait_for_page_stable()
         logging.info(f"Selected duration: {self.DURATION_HOURS}")
 
-
+    @logged_step
     def click_next(self):
         self.wait_and_click(By.CSS_SELECTOR, "button[data-cypress='continua']")
         self.wait_for_page_stable()
 
+    @logged_step
     def click_final_next(self):
         xpath = "//a[contains(text(), 'Next') and contains(@class, 'btn-primary')]"
         self.wait_and_click(By.XPATH, xpath)
         self.wait_for_page_stable()
         logging.info("Clicked FINAL NEXT button")
 
+    @logged_step
     def select_first_available_day(self):
         # find element first
         day_el = self.wait.until(
@@ -157,6 +161,7 @@ class BookingBot:
 
         logging.info(f"Selected first available day: {day_text}")
 
+    @logged_step
     def select_time_slot(self):
         time_xpath = (
             "//div[contains(@class,'chip') and contains(@class,'disponibile')]"
@@ -166,7 +171,7 @@ class BookingBot:
         self.wait_for_page_stable()
         logging.info(f"Selected time slot: {self.PREFERRED_TIME}")
 
-
+    @logged_step
     def fill_user_info(self):
         self.wait_for_element(By.NAME, "codice_fiscale").send_keys(self.USER_CF)
         self.wait_for_element(By.NAME, "cognome_nome").send_keys(self.USER_NAME)
@@ -175,6 +180,7 @@ class BookingBot:
 
         logging.info(f"User info filled")
 
+    @logged_step
     def click_confirm(self):
         xpath = "//button[normalize-space(text())='Confirm']"
         self.wait_and_click(By.XPATH, xpath)
