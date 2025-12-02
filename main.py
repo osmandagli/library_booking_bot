@@ -1,31 +1,34 @@
 import json
 import time
-from psutil import Process
 
-import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 
-from helper import normalize_time_string, init_options
+from helper import init_options
 
 import logging
 
 class BookingBot:
     def __init__(self, config_path="config.json"):
-        self.load_config(config_path)
+        try:
+            self.load_config(config_path)
 
-        chromedriver_autoinstaller.install()
+            self.options = init_options()
 
-        self.options = init_options()
-        self.driver = webdriver.Chrome(options=self.options)
-        self.wait = WebDriverWait(self.driver, 10)
+            self.driver = webdriver.Chrome(options=self.options)   # <-- crashing here
 
-        # track chrome process to kill safely
-        self.driver_pid = self.driver.service.process.pid
-        self.parent = Process(self.driver_pid)
-        self.child_before = self.parent.children(recursive=True)
+            self.wait = WebDriverWait(self.driver, 10)
+
+            self.driver_pid = self.driver.service.process.pid
+
+            self.child_before = self.parent.children(recursive=True)
+
+        except Exception as e:
+            logging.exception("FATAL ERROR in __init__: %s", e)
+            raise
+
 
     def wait_for_page_stable(self, timeout=5):
         """
@@ -37,7 +40,6 @@ class BookingBot:
             if html == last_html:
                 return
             last_html = html
-            time.sleep(0.5)
     
     def wait_for_element(self, by, value, timeout=10):
         for _ in range(timeout):
@@ -96,7 +98,6 @@ class BookingBot:
 
     def open_site(self):
         self.driver.get("https://prenotabiblio.sba.unimi.it/portalePlanning/biblio")
-        time.sleep(4)
 
     def start_new_booking(self):
         xpath = "//h5[contains(normalize-space(.), 'New booking')]/ancestor::a"
@@ -194,10 +195,12 @@ class BookingBot:
             self.fill_user_info()
             self.click_final_next()
             self.click_confirm()
+            time.sleep(1)
 
             print("\nBooking bot finished successfully!\n")
 
         except Exception as e:
+            logging.ERROR("Fuck")
             #self.driver.save_screenshot("error.png")
             #print("ERROR — Screenshot saved as error.png")
             raise e
