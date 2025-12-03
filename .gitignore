@@ -36,4 +36,6 @@ Thumbs.db
 # Virtual environment activation scripts
 run_bot.sh
 
-
+*.png
+*.html
+*.json

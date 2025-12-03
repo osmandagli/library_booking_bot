@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from helper import init_options, logged_step
 
 import logging
+import argparse
 
 class BookingBot:
     def __init__(self, config_path="config.json"):
@@ -22,8 +23,6 @@ class BookingBot:
             self.wait = WebDriverWait(self.driver, 10)
 
             self.driver_pid = self.driver.service.process.pid
-
-            self.child_before = self.parent.children(recursive=True)
 
         except Exception as e:
             logging.exception("FATAL ERROR in __init__: %s", e)
@@ -150,12 +149,37 @@ class BookingBot:
 
     @logged_step
     def select_first_available_day(self):
-        # find element first
-        day_el = self.wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.day:not(.unselectable)"))
-        )
+        # Wait for calendar to render
+        self.wait_for_page_stable()
+
+        # Try multiple selectors (sometimes the HTML changes)
+        selectors = [
+            "div.day:not(.unselectable)",
+            ".day.disponibile",
+            "div.day-wrapper div.day:not(.unselectable)"
+        ]
+
+        day_el = None
+
+        for css in selectors:
+            try:
+                day_el = self.wait.until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, css))
+                )
+                break
+            except:
+                continue
+
+        if not day_el:
+            # Save HTML for debugging
+            with open("calendar_debug.html", "w") as f:
+                f.write(self.driver.page_source)
+
+        logging.error("❌ No available day found. HTML saved to calendar_debug.html")
+        raise Exception("No available day found.")
+
+        # Click using JS
         day_text = day_el.text.strip()
-        # now click using JS to avoid stale after click
         self.driver.execute_script("arguments[0].click();", day_el)
         self.wait_for_page_stable()
 
@@ -220,8 +244,11 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s"
     )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config.json")
+    args = parser.parse_args()
 
-    bot = BookingBot("config.json")
+    bot = BookingBot(args.config)
     bot.run()
 
 
